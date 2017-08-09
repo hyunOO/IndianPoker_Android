@@ -6,172 +6,172 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_weight="1"
-        android:weightSum="4"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="4">
 
         <LinearLayout
-            android:weightSum="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-            
+            android:weightSum="2">
+
             <TextView
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="Player2"/>
+                android:text="Player2" />
 
             <LinearLayout
-                android:weightSum="3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:weightSum="3">
 
                 <ImageView
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/chips"/>
+                    android:layout_weight="1"
+                    android:src="@drawable/chips" />
 
                 <TextView
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="X"/>
+                    android:text="X" />
 
                 <TextView
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0"/>
+                    android:text="0" />
             </LinearLayout>
-            
+
         </LinearLayout>
 
         <LinearLayout
-            android:weightSum="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:weightSum="3">
 
             <LinearLayout
-                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:weightSum="2">
 
                 <ImageView
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/chip"/>
+                    android:layout_weight="1"
+                    android:src="@drawable/chip" />
 
                 <ImageView
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/chip"/>
+                    android:layout_weight="1"
+                    android:src="@drawable/chip" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:weightSum="2">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="X"/>
+                    android:text="X" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="X"/>
+                    android:text="X" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:weightSum="2">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    android:text="0"/>
+                    android:gravity="center"
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    android:text="0"/>
+                    android:gravity="center"
+                    android:text="0" />
 
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:weightSum="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:weightSum="2">
 
             <TextView
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="Player1"/>
+                android:text="Player1" />
 
             <LinearLayout
-                android:weightSum="3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:weightSum="3">
 
                 <ImageView
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/chips"/>
+                    android:layout_weight="1"
+                    android:src="@drawable/chips" />
 
                 <TextView
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="X"/>
+                    android:text="X" />
 
                 <TextView
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0"/>
+                    android:text="0" />
             </LinearLayout>
 
         </LinearLayout>
