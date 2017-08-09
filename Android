@@ -1,0 +1,7 @@
+M	.idea/modules.xml
+M	app/src/main/AndroidManifest.xml
+A	app/src/main/java/com/example/kanghyunwoo/indianpoker/Game.java
+M	app/src/main/java/com/example/kanghyunwoo/indianpoker/GameActivity.java
+M	app/src/main/java/com/example/kanghyunwoo/indianpoker/MainActivity.java
+M	app/src/main/res/layout/activity_game.xml
+A	app/src/main/res/layout/activity_game_result.xml
