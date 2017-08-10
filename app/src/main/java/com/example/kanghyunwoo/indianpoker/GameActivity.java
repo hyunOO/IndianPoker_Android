@@ -1,8 +1,13 @@
 package com.example.kanghyunwoo.indianpoker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,7 +21,7 @@ public class GameActivity extends AppCompatActivity {
     boolean touchPossible = false;
     // 1: win, -1: loose
     int gameResult = 0;
-
+    //
     int countTouch = 0;
 
     // text of my bet, your bet, my chips, your chips in layout
@@ -26,13 +31,41 @@ public class GameActivity extends AppCompatActivity {
     TextView yourChipsText;
     // image of myCard or back side of card
     ImageView myCardImageView;
+    // see card textView
+    TextView seeCardText;
+    // choose first button
+    Button chooseFirstButton;
+    // your view in scoreboard
+    LinearLayout yourView;
+    // my view in scroreborad
+    LinearLayout myView;
+    // game result text;
+    TextView gameResultText;
+    // game result view
+    LinearLayout gameResultView;
+    // play again button
+    Button playAgainButton;
+    // other players button
+    Button otherPlayersButton;
+    /**
+     *  for check touch count
+     */
+    // touch count text
+    TextView touchCountText;
+    // game result button
+    Button gameResultButton;
+
+
+
+    // touch location
+    private float y1, y2;
+    static final int MIN_DISTANCE = 150;
 
     // TODO : audio sound for game
     // systemSoundID_betting
     // systemSoundID_cardChange
     // systemSoundID_finishingBetting
 
-    // TODO : recognizing tap(betting) and swipe down(finishing betting)
 
     // TODO : bluetooth networking
 
@@ -51,10 +84,31 @@ public class GameActivity extends AppCompatActivity {
         yourChipsText = (TextView)findViewById(R.id.yourChips);
         // image of myCard or back side of card
         myCardImageView = (ImageView)findViewById(R.id.myCard);
+        // see card textview
+        seeCardText = (TextView)findViewById(R.id.seeCard);
+        // choose first button
+        chooseFirstButton = (Button)findViewById(R.id.chooseFirst);
+        // your view in scoreboard
+        yourView = (LinearLayout)findViewById(R.id.yourView);
+        // my view in scroreborad
+        myView = (LinearLayout)findViewById(R.id.myView);
+        // game result text;
+        gameResultText = (TextView)findViewById(R.id.gameResultText);
+        // game result view
+        gameResultView = (LinearLayout)findViewById(R.id.gameResultView);
+        // play again button
+        playAgainButton = (Button)findViewById(R.id.playAgain);
+        // other players button
+        otherPlayersButton = (Button)findViewById(R.id.otherPlayers);
 
-
+        /**
+         *  for check touch count
+         */
+        // touch count text
+        touchCountText = (TextView)findViewById(R.id.touchCount);
+        // show game result button
+        gameResultButton = (Button)findViewById(R.id.gameResult);
     }
-
 
     /**
      * chooseFirst
@@ -63,11 +117,14 @@ public class GameActivity extends AppCompatActivity {
      */
     public void chooseFirst() {
         pickFirstCards();
-        /*
-        TODO : chooseFirstButton
-        chooseFirstButton.isHidden = true
-        chooseFirstButton.isEnabled = false
-        */
+        /**
+         * TODO : chooseFirstButton
+         * chooseFirstButton.isHidden = true
+         * chooseFirstButton.isEnabled = false
+         * change to ...
+         */
+        chooseFirstButton.setVisibility(View.INVISIBLE);
+        chooseFirstButton.setEnabled(false);
     }
 
     /**
@@ -88,20 +145,20 @@ public class GameActivity extends AppCompatActivity {
         if (myFirstCard > yourFirstCard) {
             // TODO
             //sendNum(yourFirstCard + 20)
-            //currentGame.meFirst = true
-            //self.updateTurn(myturn: true)
+            currentGame.meFirst = true;
+            updateTurn(true);
         }
         // You're first player
         else {
             // TODO
             //sendNum(yourFirstCard+30)
-            //currentGame.meFirst = false
-            //self.updateTurn(myturn: false)
+            currentGame.meFirst = false;
+            updateTurn(false);
         }
         // TODO
         //startMotion()
-        //updateCardImage(myFirstCard)
-        //pickCards()
+        updateCardImage(myFirstCard);
+        pickCards();
     }
 
     /**
@@ -127,6 +184,11 @@ public class GameActivity extends AppCompatActivity {
      * When you touch the screen for bet
      */
     public void touchBet() {
+
+        /***********************Test****************************/
+        countTouch += 1;
+        touchCountText.setText(String.valueOf(countTouch));
+        /*******************************************************/
         if (currentGame.isMyTurn == true &&
                 (currentGame.myBet - currentGame.yourBet < currentGame.yourChips) &&
                 currentGame.myChips > 0 &&
@@ -191,6 +253,10 @@ public class GameActivity extends AppCompatActivity {
             // TODO : change in scoreborad
             //myView.layer.borderColor=UIColor.black.cgColor
             //yourView.layer.borderColor=UIColor.clear.cgColor
+            //change to...
+            myView.setBackgroundResource(R.drawable.boarder);
+            yourView.setBackgroundResource(0);
+
         }
         // your turn
         else {
@@ -198,6 +264,9 @@ public class GameActivity extends AppCompatActivity {
             // TODO : change in scoreborad
             //yourView.layer.borderColor=UIColor.black.cgColor
             //myView.layer.borderColor=UIColor.clear.cgColor
+            //change to..
+            myView.setBackgroundResource(0);
+            yourView.setBackgroundResource(R.drawable.boarder);
         }
     }
 
@@ -217,22 +286,32 @@ public class GameActivity extends AppCompatActivity {
      * Finishing betting by swipe down
      */
     public void finishBetting() {
+        /***********************Test****************************/
+        countTouch = 0;
+        touchCountText.setText(String.valueOf(countTouch));
+        /*******************************************************/
         if (currentGame.isMyTurn) {
             // TODO : systemSoundID_finisiBetting
             //AudioServicesPlaySystemSound (self.systemSoundID_finishBetting)
             int result = currentGame.myTurn();
             // I win, you loose
             if(result > 0) {
+                gameResultText.setText("승");
                 gameResult = 1;
+                //moveToResult();
             }
             // I loose, you win
             else if(result < 0) {
+                gameResultText.setText("");
                 gameResult = -1;
+                //moveToResult();
             }
 
             if (currentGame.newSet == true) {
                 // TODO
-                //seeCard.isHiddent = false
+                //seeCard.isHidden = false
+                // change to ...
+                seeCardText.setVisibility(View.VISIBLE);
             }
             // TODO : send 100 to other player
             //sendNum(100)
@@ -269,6 +348,36 @@ public class GameActivity extends AppCompatActivity {
     }
 
     /**
+     * deal with touch event and connect with function touchBet and finishBetting
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int e = event.getAction();
+        // get y1 and y2 when we touch
+        // y1 : y when you start touch
+        // y2 : y when you stop touch
+        // TODO : we need to set MIN_DISTANCE to proper value
+        switch (e) {
+            case MotionEvent.ACTION_DOWN:
+                y1 = event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                y2 = event.getY();
+                float deltaY = y2 - y1;
+                if (deltaY > MIN_DISTANCE) {
+                    finishBetting();
+                } else if (Math.abs(deltaY) < MIN_DISTANCE) {
+                    touchBet();
+                }
+            default:
+                break;
+        }
+        return true;
+    }
+
+    /**
      * startMotion
      * When you locate your phone on forehead, it shows your card on screen
      */
@@ -289,13 +398,33 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * moveToResult
-     * TODO : Move to result page
      * we need to choose how to show result page
      */
+    // we need to delete parameter view later
+    public void moveToResult(View view) {
+        gameResultView.setVisibility(View.VISIBLE);
+        playAgainButton.setEnabled(true);
+        otherPlayersButton.setEnabled(true);
+    }
 
+    /**
+     * otherPlayers
+     * Go to main page
+     * @param view
+     */
+    public void otherPlayers(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
-
-
+    /**
+     * playAgain
+     * Play agin with same player
+     * @param view
+     */
+    public void playAgain(View view) {
+        // TODO : implement
+    }
 
 
 }
