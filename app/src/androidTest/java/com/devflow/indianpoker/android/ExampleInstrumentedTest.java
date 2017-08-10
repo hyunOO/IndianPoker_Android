@@ -1,4 +1,4 @@
-package com.example.kanghyunwoo.indianpoker;
+package com.devflow.indianpoker.android;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

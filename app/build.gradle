@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "com.example.kanghyunwoo.indianpoker"
+        applicationId "com.devflow.indianpoker.android"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
@@ -26,5 +26,6 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.google.android.gms:play-services-nearby:9.0.0'
     testCompile 'junit:junit:4.12'
 }
