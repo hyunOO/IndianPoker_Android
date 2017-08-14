@@ -1,6 +1,11 @@
 package com.example.kanghyunwoo.indianpoker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -13,7 +18,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity {
+import static com.example.kanghyunwoo.indianpoker.R.id.myBet;
+import static com.example.kanghyunwoo.indianpoker.R.id.seeCard;
+
+public class GameActivity extends AppCompatActivity implements SensorEventListener{
 
     // current game
     Game currentGame = new Game();
@@ -70,6 +78,18 @@ public class GameActivity extends AppCompatActivity {
     // TODO : bluetooth networking
 
     // TODO : motion recognition
+    private SensorManager senSensorManager;
+    private Sensor senAccelerometer;
+
+    private long lastUpdate = 0;
+    private float last_x, last_y, last_z;
+    private static final int SHAKE_THRESHOLD = 600;
+    /**
+     * for check acceleromter
+     */
+    TextView xText;
+    TextView yText;
+    TextView zText;
 
 
     @Override
@@ -78,14 +98,14 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         // text of my bet, your bet, my chips, your chips in layout
-        myBetText = (TextView)findViewById(R.id.myBet);
+        myBetText = (TextView)findViewById(myBet);
         yourBetText = (TextView)findViewById(R.id.yourBet);
         myChipsText = (TextView)findViewById(R.id.myChips);
         yourChipsText = (TextView)findViewById(R.id.yourChips);
         // image of myCard or back side of card
         myCardImageView = (ImageView)findViewById(R.id.myCard);
         // see card textview
-        seeCardText = (TextView)findViewById(R.id.seeCard);
+        seeCardText = (TextView)findViewById(seeCard);
         // choose first button
         chooseFirstButton = (Button)findViewById(R.id.chooseFirst);
         // your view in scoreboard
@@ -102,12 +122,27 @@ public class GameActivity extends AppCompatActivity {
         otherPlayersButton = (Button)findViewById(R.id.otherPlayers);
 
         /**
-         *  for check touch count
+         * for check touch count
          */
         // touch count text
         touchCountText = (TextView)findViewById(R.id.touchCount);
         // show game result button
-        gameResultButton = (Button)findViewById(R.id.gameResult);
+        //gameResultButton = (Button)findViewById(R.id.gameResult);
+
+        /**
+         * initialize motion sensor
+         */
+        senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        //senSensorManager.registerListener(this,
+                //senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        senSensorManager.unregisterListener(this, senAccelerometer);
+        /**
+         * for check accelerometer
+         */
+        xText = (TextView)findViewById(R.id.x);
+        yText = (TextView)findViewById(R.id.y);
+        zText = (TextView)findViewById(R.id.z);
     }
 
     /**
@@ -157,6 +192,9 @@ public class GameActivity extends AppCompatActivity {
         }
         // TODO
         //startMotion()
+        // changes to
+        senSensorManager.registerListener(this,
+                senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         updateCardImage(myFirstCard);
         pickCards();
     }
@@ -378,12 +416,130 @@ public class GameActivity extends AppCompatActivity {
     }
 
     /**
+     * Functions related with sensor
+     */
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Sensor mySensor = sensorEvent.sensor;
+
+        if(mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
+
+            long curTime = System.currentTimeMillis();
+
+            if((curTime - lastUpdate) > 100) {
+                long diffTime = (curTime - lastUpdate);
+                lastUpdate = curTime;
+            }
+
+            // when I put my device on my forehead
+            if(y > 8.5) {
+                // TODO
+                //self.sendNum(50)
+                if (currentGame.myBet == 0 && currentGame.yourBet == 0 &&
+                        currentGame.newSet == false) {
+                    updateCardImage(currentGame.myCard);
+                    initialBet();
+                    updateBetAndChips();
+                }
+            } else if(y < 3) {
+                touchPossible = false;
+
+                if(currentGame.newSet == true) {
+                    currentGame.newSet = false;
+                    seeCardText.setVisibility(View.INVISIBLE);
+                    //sleep(1)
+                    updateBetAndChips();
+
+                    // I loose, you win
+                    if (currentGame.myChips == 0) {
+                        gameResultText.setText("패");
+                        moveToResult();
+                    }
+                    // I win, you loose
+                    else if (currentGame.yourChips == 0) {
+                        gameResultText.setText("승");
+                        moveToResult();
+
+                    }
+               }
+            }
+            /**
+             *
+             */
+            xText.setText(String.valueOf(x));
+            yText.setText(String.valueOf(y));
+            zText.setText(String.valueOf(z));
+
+            last_x = x;
+            last_y = y;
+            last_z = z;
+
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        senSensorManager.unregisterListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        senSensorManager.registerListener(this,
+                senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    /**
      * startMotion
      * When you locate your phone on forehead, it shows your card on screen
      */
     public void startMotion() {
         // TODO : motion recognition
         //
+        /*
+        // 얼마나 자주 기기의 위치를 확인하는지
+        manager.accelerometerUpdateInterval = 0.6
+        manager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, error) in
+            if let myData1 = data
+            {
+                // 들었을 때(이마에 올려놓았을 때)
+                if myData1.acceleration.y < -0.85 {
+                    self.sendNum(50)
+                    if (currentGame.myBet == 0 &&
+                    currentGame.yourBet == 0 &&
+                    currentGame.newSet == false) {
+                        self.updateCardImage(currentGame.myCard)
+                        self.initialBet()
+                        self.updateBetAndChips()
+                    }
+                }
+                // 내려놓았을 때
+                else if myData1.acceleration.y > -0.3 {
+                    touchPossible = false
+                    if (currentGame.newSet == true) {
+                        currentGame.newSet = false
+                        self.seeCard.isHidden = true
+                        sleep(1)
+                        self.updateBetAndChips()
+                        if (currentGame.myChips == 0) {
+                            self.moveToResult(result: .loose)
+                        } else if (currentGame.yourChips==0) {
+                            self.moveToResult(result: .win)
+                        }
+                    }
+                }
+            }
+        }
+         */
     }
 
     /**
@@ -400,8 +556,7 @@ public class GameActivity extends AppCompatActivity {
      * moveToResult
      * we need to choose how to show result page
      */
-    // we need to delete parameter view later
-    public void moveToResult(View view) {
+    public void moveToResult() {
         gameResultView.setVisibility(View.VISIBLE);
         playAgainButton.setEnabled(true);
         otherPlayersButton.setEnabled(true);

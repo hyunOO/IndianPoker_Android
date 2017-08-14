@@ -252,6 +252,42 @@
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />
 
+            <TextView
+                android:id="@+id/x"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:background="@color/generalBackground"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="x"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/y"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:background="@color/generalBackground"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="y"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/z"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
+                android:background="@color/generalBackground"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="z"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
             <Button
                 android:id="@+id/chooseFirst"
                 android:layout_width="match_parent"
@@ -261,17 +297,6 @@
                 android:gravity="center"
                 android:padding="50dp"
                 android:text="선플레이어 정하기"
-                android:textColor="@android:color/white" />
-
-            <Button
-                android:id="@+id/gameResult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="340dp"
-                android:background="@color/generalBackground"
-                android:onClick="moveToResult"
-                android:padding="0dp"
-                android:text="GAMERESULT"
                 android:textColor="@android:color/white" />
 
 
@@ -313,11 +338,11 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="0dp"
-                android:enabled="false"
                 android:autoText="false"
                 android:background="@null"
-                android:onClick="playAgain"
+                android:enabled="false"
                 android:gravity="center_vertical"
+                android:onClick="playAgain"
                 android:text="Play Again"
                 android:textAlignment="center"
                 android:textColor="@android:color/white" />
@@ -328,11 +353,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/otherPlayers"
                 android:layout_centerHorizontal="true"
-                android:enabled="false"
                 android:background="@null"
+                android:enabled="false"
                 android:gravity="center_vertical"
-                android:text="Other players"
                 android:onClick="otherPlayers"
+                android:text="Other players"
                 android:textAlignment="center"
                 android:textColor="@android:color/white" />
         </LinearLayout>
