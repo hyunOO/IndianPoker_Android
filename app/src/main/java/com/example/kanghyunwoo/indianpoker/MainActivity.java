@@ -13,8 +13,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    // When player press "GAME START" button, function start GameAcitivity
     public void gameStart(View view) {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
+
+    // TODO : bluetooth connection button "FIND PLAYERS"
+
+    /**
+     * TODO : function 'sendStartCode()'
+     * function sends 0 to other player to start game
+     */
 }
