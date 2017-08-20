@@ -75,16 +75,14 @@ public class Game {
             myBet = 0;
             yourBet = 0;
             if (myCard == 10) {
-                if (myChips <= 10) {
+                if (myChips < 10) {
                     // when your chips are less than 10
-                    yourChips -= myChips;
-                    myChips =  0;
+                    yourChips += myChips;
+                    myChips = 0;
                 } else {
-                    myChips -= 10;
                     yourChips += 10;
+                    myChips -= 10;
                 }
-                yourChips += 10;
-                myChips -= 10;
             }
             meFirst = false;
             newSet = true;
@@ -132,9 +130,9 @@ public class Game {
             myBet = 0;
             yourBet = 0;
             if (yourCard == 10) {
-                if (yourChips <= 10) {
+                if (yourChips < 10) {
                     // when your chips are less than 10
-                    myChips -= yourChips;
+                    myChips += yourChips;
                     yourChips =  0;
                 } else {
                     myChips += 10;
